@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS expense_tracker.users (
 	active BOOLEAN DEFAULT TRUE NOT NULL,
 	insert_date TIMESTAMP, 
 	update_date TIMESTAMP
-)
+);
 
 CREATE TABLE IF NOT EXISTS expense_tracker.bank_account_owner (
 	id_ba_own INTEGER PRIMARY KEY,
@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS expense_tracker.bank_account_owner (
 	active BOOLEAN DEFAULT TRUE NOT NULL,
 	insert_date TIMESTAMP,
 	update_date TIMESTAMP
-)
+);
 
 CREATE TABLE IF NOT EXISTS expense_tracker.bank_account_types (
 	id_ba_type INTEGER PRIMARY KEY,
@@ -29,8 +29,7 @@ CREATE TABLE IF NOT EXISTS expense_tracker.bank_account_types (
 	insert_date TIMESTAMP,
 	update_date TIMESTAMP, 
 	FOREIGN KEY (id_ba_own) REFERENCES expense_tracker.bank_account_owner (id_ba_own)
-)
-
+);
 
 CREATE TABLE IF NOT EXISTS expense_tracker.transaction_bank_accounts (
 	id_trans_ba INTEGER PRIMARY KEY,
@@ -43,7 +42,7 @@ CREATE TABLE IF NOT EXISTS expense_tracker.transaction_bank_accounts (
 	update_date TIMESTAMP, 
 	FOREIGN KEY (id_ba_own) REFERENCES expense_tracker.bank_account_owner (id_ba_own), 
 	FOREIGN KEY (id_ba_type) REFERENCES expense_tracker.bank_account_types (id_ba_type)
-)
+);
 
 CREATE TABLE IF NOT EXISTS expense_tracker.transaction_category (
 	id_trans_cat INTEGER PRIMARY KEY,
@@ -52,7 +51,7 @@ CREATE TABLE IF NOT EXISTS expense_tracker.transaction_category (
 	active BOOLEAN DEFAULT TRUE NOT NULL,
 	insert_date TIMESTAMP,
 	update_date TIMESTAMP
-)
+);
 
 CREATE TABLE IF NOT EXISTS expense_tracker.transaction_subcategory (
 	id_trans_subcat INTEGER PRIMARY KEY,
@@ -63,7 +62,7 @@ CREATE TABLE IF NOT EXISTS expense_tracker.transaction_subcategory (
 	insert_date TIMESTAMP,
 	update_date TIMESTAMP, 
 	FOREIGN KEY (id_trans_cat) REFERENCES expense_tracker.transaction_category (id_trans_cat)
-)
+);
 
 CREATE TABLE IF NOT EXISTS expense_tracker.transaction_type (
 	id_trans_type INTEGER PRIMARY KEY,
@@ -72,7 +71,7 @@ CREATE TABLE IF NOT EXISTS expense_tracker.transaction_type (
 	active BOOLEAN DEFAULT TRUE NOT NULL,
 	insert_date TIMESTAMP, 
 	update_date TIMESTAMP
-)
+);
 
 CREATE TABLE IF NOT EXISTS expense_tracker.transactions (
 	id_transaction INTEGER PRIMARY KEY,
@@ -87,11 +86,11 @@ CREATE TABLE IF NOT EXISTS expense_tracker.transactions (
 	insert_date TIMESTAMP,
 	update_date TIMESTAMP, 
 	FOREIGN KEY (id_trans_ba) REFERENCES expense_tracker.transaction_bank_accounts (id_trans_ba), 
-	FOREIGN KEY (id_trans_cat) REFERENCES expense_tracker.transaction_category (id_trans), 
+	FOREIGN KEY (id_trans_cat) REFERENCES expense_tracker.transaction_category (id_trans_cat), 
 	FOREIGN KEY (id_trans_subcat) REFERENCES expense_tracker.transaction_subcategory (id_trans_subcat), 
 	FOREIGN KEY (id_trans_type) REFERENCES expense_tracker.transaction_type (id_trans_type), 
 	FOREIGN KEY (id_user) REFERENCES expense_tracker.users (id_user)
-)
+);
 
 DROP TABLE IF EXISTS expense_tracker.bank_account_owner,expense_tracker.bank_account_types,expense_tracker.
 transactions,expense_tracker.transaction_bank_accounts,expense_tracker.transaction_category, expense_tracker.transaction_subcategory,
