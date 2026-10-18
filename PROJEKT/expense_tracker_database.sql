@@ -1,3 +1,21 @@
+CREATE ROLE expense_tracker_user WITH LOGIN PASSWORD 'qwerty123?';
+
+REVOKE CREATE ON SCHEMA public FROM PUBLIC;
+
+DROP SCHEMA IF EXISTS expense_tracker CASCADE;
+
+CREATE ROLE expense_tracker_group;
+
+CREATE SCHEMA expense_tracker AUTHORIZATION expense_tracker_group;
+
+GRANT CONNECT ON DATABASE postgres TO expense_tracker_group;
+
+GRANT ALL PRIVILEGES ON SCHEMA expense_tracker TO expense_tracker_group;
+
+GRANT expense_tracker_group TO expense_tracker_user;
+
+DROP TABLE IF EXISTS expense_tracker.bank_account_owner,expense_tracker.bank_account_types,expense_tracker. transactions,expense_tracker.transaction_bank_accounts,expense_tracker.transaction_category, expense_tracker.transaction_subcategory, expense_tracker.transaction_type, expense_tracker.users;
+
 CREATE TABLE IF NOT EXISTS expense_tracker.users (
 	id_user INTEGER PRIMARY KEY, 
 	user_login VARCHAR (25) NOT NULL, 
@@ -92,6 +110,3 @@ CREATE TABLE IF NOT EXISTS expense_tracker.transactions (
 	FOREIGN KEY (id_user) REFERENCES expense_tracker.users (id_user)
 );
 
-DROP TABLE IF EXISTS expense_tracker.bank_account_owner,expense_tracker.bank_account_types,expense_tracker.
-transactions,expense_tracker.transaction_bank_accounts,expense_tracker.transaction_category, expense_tracker.transaction_subcategory,
-expense_tracker.transaction_type, expense_tracker.users;
